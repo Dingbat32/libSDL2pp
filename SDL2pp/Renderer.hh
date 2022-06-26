@@ -22,6 +22,8 @@
 #ifndef SDL2PP_RENDERER_HH
 #define SDL2PP_RENDERER_HH
 
+#include <vector>
+
 #include <SDL_stdinc.h>
 #include <SDL_blendmode.h>
 
@@ -403,6 +405,20 @@ public:
 	Renderer& DrawPoints(const Point* points, int count);
 
 	////////////////////////////////////////////////////////////
+	/// \brief Draw multiple points on the current rendering target
+	///
+	/// \param[in] points Vector of coordinates of points to draw
+	///
+	/// \returns Reference to self
+	///
+	/// \throws SDL2pp::Exception
+	///
+	/// \see http://wiki.libsdl.org/SDL_RenderDrawPoints
+	///
+	////////////////////////////////////////////////////////////
+	Renderer& DrawPoints(const std::vector<Point>& points);
+	
+    ////////////////////////////////////////////////////////////
 	/// \brief Draw a line on the current rendering target
 	///
 	/// \param[in] x1 X coordinate of the start point
@@ -450,6 +466,20 @@ public:
 	Renderer& DrawLines(const Point* points, int count);
 
 	////////////////////////////////////////////////////////////
+	/// \brief Draw a polyline on the current rendering target
+	///
+	/// \param[in] points Vector of coordinates of points along the polyline
+	///
+	/// \returns Reference to self
+	///
+	/// \throws SDL2pp::Exception
+	///
+	/// \see http://wiki.libsdl.org/SDL_RenderDrawLines
+	///
+	////////////////////////////////////////////////////////////
+	Renderer& DrawLines(const std::vector<Point>& points);
+	
+    ////////////////////////////////////////////////////////////
 	/// \brief Draw a rectangle on the current rendering target
 	///
 	/// \param[in] x1 X coordinate of the start corner
@@ -509,6 +539,19 @@ public:
 	///
 	////////////////////////////////////////////////////////////
 	Renderer& DrawRects(const Rect* rects, int count);
+    
+	////////////////////////////////////////////////////////////
+	/// \brief Draw multiple rectangles on the current rendering target
+	///
+	/// \param[in] rects Vector of rectangles to draw
+	///
+	/// \returns Reference to self
+	///
+	/// \throws SDL2pp::Exception
+	///
+	///
+	////////////////////////////////////////////////////////////
+    Renderer& DrawRects(const std::vector<Rect>& rects);
 
 	////////////////////////////////////////////////////////////
 	/// \brief Fill a rectangle on the current rendering target
@@ -572,6 +615,20 @@ public:
 	Renderer& FillRects(const Rect* rects, int count);
 
 	////////////////////////////////////////////////////////////
+	/// \brief Fill multiple rectangles on the current rendering target
+	///
+	/// \param[in] rects Vector of rectangles to draw
+	///
+	/// \returns Reference to self
+	///
+	/// \throws SDL2pp::Exception
+	///
+	/// \see http://wiki.libsdl.org/SDL_RenderFillRects
+	///
+	////////////////////////////////////////////////////////////
+	Renderer& FillRects(const std::vector<Rect>& rects);
+	
+    ////////////////////////////////////////////////////////////
 	/// \brief Read pixels from the current rendering target
 	///
 	/// \param[in] rect Area to read or NullOpt for the entire render

@@ -19,7 +19,6 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-#include <vector>
 #include <cassert>
 
 #include <SDL.h>
@@ -242,6 +241,14 @@ Renderer& Renderer::DrawPoints(const Point* points, int count) {
 	return *this;
 }
 
+Renderer& Renderer::DrawPoints(const std::vector<Point>& points) {
+    static_assert(sizeof(Point) == sizeof(SDL_Point));
+	if (SDL_RenderDrawPoints(renderer_, points.data(), points.size()) != 0)
+		throw Exception("SDL_RenderDrawPoints");
+
+	return *this;
+}
+
 Renderer& Renderer::DrawLine(int x1, int y1, int x2, int y2) {
 	if (SDL_RenderDrawLine(renderer_, x1, y1, x2, y2) != 0)
 		throw Exception("SDL_RenderDrawLine");
@@ -263,6 +270,14 @@ Renderer& Renderer::DrawLines(const Point* points, int count) {
 		throw Exception("SDL_RenderDrawLines");
 
 	return *this;
+}
+
+Renderer& Renderer::DrawLines(const std::vector<Point>& points) {
+    static_assert(sizeof(Point) == sizeof(SDL_Point));
+	if (SDL_RenderDrawLines(renderer_, points.data(), points.size()) != 0)
+		throw Exception("SDL_RenderDrawLines");
+
+    return *this;
 }
 
 Renderer& Renderer::DrawRect(int x1, int y1, int x2, int y2) {
@@ -295,6 +310,14 @@ Renderer& Renderer::DrawRects(const Rect* rects, int count) {
 	return *this;
 }
 
+Renderer& Renderer::DrawRects(const std::vector<Rect>& rects) {
+    static_assert(sizeof(Rect) == sizeof(SDL_Rect));
+    if (SDL_RenderDrawRects(renderer_, rects.data(), rects.size()) != 0)
+        throw Exception("SDL_RenderDrawRects");
+
+    return *this;
+}
+
 Renderer& Renderer::FillRect(int x1, int y1, int x2, int y2) {
 	SDL_Rect rect = {x1, y1, x2 - x1 + 1, y2 - y1 + 1};
 	if (SDL_RenderFillRect(renderer_, &rect) != 0)
@@ -320,6 +343,13 @@ Renderer& Renderer::FillRects(const Rect* rects, int count) {
 		sdl_rects.emplace_back(*r);
 
 	if (SDL_RenderFillRects(renderer_, sdl_rects.data(), count) != 0)
+		throw Exception("SDL_RenderFillRects");
+
+	return *this;
+}
+
+Renderer& Renderer::FillRects(const std::vector<Rect>& rects) {
+	if (SDL_RenderFillRects(renderer_, rects.data(), rects.size()) != 0)
 		throw Exception("SDL_RenderFillRects");
 
 	return *this;
